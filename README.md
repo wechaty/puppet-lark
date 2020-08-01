@@ -1,4 +1,4 @@
-# wechaty-puppty-feishu
+# 基于开放 API 封装 Wechaty 接口下的飞书聊天机器人
 
 ## 暑期2020
 
