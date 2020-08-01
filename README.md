@@ -42,3 +42,7 @@
     - 代码重构
 - 项目链接：[https://github.com/Roxanne718/wechaty-puppty-feishu](https://github.com/Roxanne718/wechaty-puppty-feishu)
 - 联系方式：+86 17822015718 | email: 953299708@qq.com
+
+## 相关链接
+- [飞书开放平台](https://open.feishu.cn/document/ukTMukTMukTM/uUTNz4SN1MjL1UzM)
+- [Wechaty](https://wechaty.js.org/v/zh/)
