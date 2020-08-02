@@ -4,7 +4,7 @@
 
 “开源软件供应链点亮计划-暑期2020”（以下简称暑期2020）是由中科院软件所与 openEuler 社区共同举办的一项面向高校学生的暑期活动。旨在鼓励在校学生积极参与开源软件的开发维护，促进国内优秀开源软件社区的蓬勃发展。
 根据项目的难易程度和完成情况，参与者还可获取“开源软件供应链点亮计划-暑期2020”活动奖金和奖杯。
-官网：[https://isrc.iscas.ac.cn/summer2020](https://isrc.iscas.ac.cn/summer2020) 官方新闻：[http://www.iscas.ac.cn/xshd2016/xshy2016/202004/t20200426_5563484.html](http://www.iscas.ac.cn/xshd2016/xshy2016/202004/t20200426_5563484.html)
+官网：[Summer2020](https://isrc.iscas.ac.cn/summer2020) 官方新闻：[News](http://www.iscas.ac.cn/xshd2016/xshy2016/202004/t20200426_5563484.html)
 本项目 [基于开放 API 封装 Wechaty 接口下的飞书聊天机器人] 系 暑期2020 支持的开源项目。
 
 ## [基于开放 API 封装 Wechaty 接口下的飞书聊天机器人]具体计划
@@ -40,9 +40,11 @@
   - 项目完善
     - 9.12 - 9.30
     - 代码重构
-- 项目链接：[https://github.com/Roxanne718/wechaty-puppty-feishu](https://github.com/Roxanne718/wechaty-puppty-feishu)
+- 项目链接：[https://github.com/Roxanne718/wechaty-puppet-lark](https://github.com/Roxanne718/wechaty-puppet-lark)
 - 联系方式：+86 17822015718 | email: 953299708@qq.com
 
 ## 相关链接
 - [飞书开放平台](https://open.feishu.cn/document/ukTMukTMukTM/uUTNz4SN1MjL1UzM)
 - [Wechaty](https://wechaty.js.org/v/zh/)
+- [Express](https://www.runoob.com/nodejs/nodejs-express-framework.html)
+- [TypeScripts中文手册](https://www.tslang.cn/docs/handbook/basic-types.html)
