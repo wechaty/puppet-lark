@@ -12,7 +12,7 @@
 - 导师：高原 吴京京
 - 学生：范蕊
 - 模块列表
-  - [ ] 接收消息
+  - [x] 接收消息
   - [ ] 通讯录获取
   - [ ] 实现 puppet 上各个类型的消息接口
   - [ ] 设计配置参数
@@ -40,7 +40,7 @@
   - 项目完善
     - 9.12 - 9.30
     - 代码重构
-- 项目链接：[https://github.com/Roxanne718/wechaty-puppty-feishu](https://github.com/Roxanne718/wechaty-puppty-feishu)
+- 项目链接：[https://github.com/Roxanne718/wechaty-puppty-lark](https://github.com/Roxanne718/wechaty-puppty-lark)
 - 联系方式：+86 17822015718 | email: 953299708@qq.com
 
 ## 相关链接
