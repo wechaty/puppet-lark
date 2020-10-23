@@ -2,19 +2,26 @@
 
 ## 运行方法
 
-### 配置系统环境变量：
-`WECHATY_PUPPET_LARK_APPID`：飞书应用的App ID
-`WECHATY_PUPPET_LARK_APPSECRET`：飞书应用的App Secret
-`WECHATY_PUPPET_PADCHAT_TOKEN`：飞书事件订阅平台提供的Verification Token
+### 配置系统环境变量
 
-### 安装依赖：
+1. `WECHATY_PUPPET_LARK_APPID`：飞书应用的App ID
+
+2. `WECHATY_PUPPET_LARK_APPSECRET`：飞书应用的App Secret
+
+3. `WECHATY_PUPPET_PADCHAT_TOKEN`：飞书事件订阅平台提供的Verification Token
+
+### 安装依赖
+
 将代码clone到本地，执行`npm install`
 
-### 飞书平台配置：
-在飞书平台获取功能权限,具体参考：[飞书开放平台-应用权限](https://open.feishu.cn/document/ukTMukTMukTM/uQjN3QjL0YzN04CN2cDN)
+### 飞书平台配置
 
-### 运行示例代码：
+在飞书平台获取功能权限，具体参考：[飞书开放平台-应用权限](https://open.feishu.cn/document/ukTMukTMukTM/uQjN3QjL0YzN04CN2cDN)
+
+### 运行示例代码
+
 `ts-node .\example\ding-dong-bot.ts`
+
 按照提示完成URL配置，即可运行示例机器人
 
 ## 项目介绍
