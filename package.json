@@ -2,8 +2,8 @@
   "name": "wechaty-pguppet-lark",
   "version": "0.3.1",
   "description": "Puppet Lark for Wechaty",
-  "main": "dist/src/index.js",
-  "typings": "dist/src/index.d.ts",
+  "main": "dist/src/mod.js",
+  "typings": "dist/src/mod.d.ts",
   "directories": {
     "test": "tests"
   },
@@ -51,6 +51,8 @@
     "@chatie/git-scripts": "^0.6.2",
     "@chatie/semver": "^0.4.7",
     "@chatie/tsconfig": "^0.11.4",
+    "@types/body-parser": "^1.19.0",
+    "@types/express": "^4.17.9",
     "@types/google-protobuf": "^3.7.2",
     "@types/ws": "^7.2.6",
     "pkg-jq": "^0.2.4",
@@ -65,6 +67,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "express-xml-bodyparser": "^0.3.0",
     "form-data": "^3.0.0",
