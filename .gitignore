@@ -1,3 +1,7 @@
 node_modules/
 examples/test.ts
 examples/test_v.mp4
+
+package-lock.json
+t.*
+t/
