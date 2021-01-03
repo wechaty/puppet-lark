@@ -1,5 +1,5 @@
 {
-  "name": "wechaty-puppet-lark",
+  "name": "wechaty-pguppet-lark",
   "version": "0.3.1",
   "description": "Puppet Lark for Wechaty",
   "main": "dist/src/index.js",
@@ -37,7 +37,10 @@
     "wechat",
     "sdk"
   ],
-  "author": "Huan LI <zixia@zixia.net>",
+  "author": "Fan RUI <https://github.com/Roxanne718>",
+  "maintainers": [
+    "Huan <zixia@zixia.net>"
+  ],
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/Chatie/wechaty-puppet-lark/issues"
