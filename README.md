@@ -1,5 +1,7 @@
 # 基于开放 API 封装 Wechaty 接口下的飞书聊天机器人
 
+[![Powered by Wechaty](https://img.shields.io/badge/Powered%20By-Wechaty-brightgreen.svg)](https://wechaty.js.org)
+
 ## 运行方法
 
 ### 配置系统环境变量
@@ -8,7 +10,7 @@
 
 2. `WECHATY_PUPPET_LARK_APPSECRET`：飞书应用的App Secret
 
-3. `WECHATY_PUPPET_PADCHAT_TOKEN`：飞书事件订阅平台提供的Verification Token
+3. `WECHATY_PUPPET_LARK_TOKEN`：飞书事件订阅平台提供的Verification Token
 
 ### 安装依赖
 
@@ -73,3 +75,17 @@
 - [Wechaty](https://wechaty.js.org/v/zh/)
 - [Express](https://www.runoob.com/nodejs/nodejs-express-framework.html)
 - [TypeScripts中文手册](https://www.tslang.cn/docs/handbook/basic-types.html)
+
+## Author
+
+Fairy FAN (范蕊), study NAS (Neural Architecture Search) in Nankai University, <https://github.com/Roxanne718>
+
+## Maintainer
+
+- [Huan LI](https://github.com/huan) ([李卓桓](http://linkedin.com/in/zixia)), Tencent TVP of Chatbot, \<zixia@zixia.net\>
+
+## Copyright & License
+
+- Code & Docs © 2020-2021 Fairy FAN and Wechaty Contributors
+- Code released under the Apache-2.0 License
+- Docs released under Creative Commons
