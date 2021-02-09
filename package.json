@@ -1,6 +1,6 @@
 {
   "name": "wechaty-pguppet-lark",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Puppet Lark for Wechaty",
   "main": "dist/src/mod.js",
   "typings": "dist/src/mod.d.ts",
