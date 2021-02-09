@@ -1,5 +1,5 @@
 {
-  "name": "wechaty-pguppet-lark",
+  "name": "wechaty-puppet-lark",
   "version": "0.3.1",
   "description": "Puppet Lark for Wechaty",
   "main": "dist/src/mod.js",
