@@ -4,14 +4,16 @@ import {
   PuppetLark,
 }                       from 'wechaty-puppet-lark'
 
+import assert from 'assert'
+
 async function main () {
   if (VERSION === '0.0.0') {
     throw new Error('version should be set before publishing')
   }
 
-  const hostie = new PuppetLark()
-  const version = hostie.versionlark
-
+  const puppet = new PuppetLark()
+  const version = puppet.version()
+  assert(version, 'load version from puppet')
   // try {
   //   await bot.start()
   //   console.info(`Wechaty v${bot.version()} smoking test passed.`)
