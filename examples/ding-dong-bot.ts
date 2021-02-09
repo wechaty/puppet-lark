@@ -1,9 +1,7 @@
 import {
   EventMessagePayload,
   MessageType,
-  ImageType,
   FileBox,
-  EventRoomJoinPayload,
 }                           from 'wechaty-puppet'
 
 import { PuppetLark } from '../src/puppet-lark'
@@ -22,15 +20,11 @@ puppet.start().catch(async e => {
 
 puppet.on('message', onMessage)
 
-async function onRoomJoin (payload: EventRoomJoinPayload) {
-
-}
-
 async function onMessage (payload: EventMessagePayload) {
   const msgPayload = await puppet.messagePayload(payload.messageId)
   // console.info(msgPayload)
   if (msgPayload.type === MessageType.Image) {
-    const image = await puppet.messageImage(msgPayload.id, ImageType.Unknown)
+    const image = await puppet.messageImage(msgPayload.id)
     await image.toFile('download.png', true)
     const myfile = FileBox.fromFile('download.png')
     await puppet.messageSendFile(msgPayload.fromId!, myfile).catch(console.error)

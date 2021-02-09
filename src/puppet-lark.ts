@@ -9,7 +9,6 @@ import {
   MessagePayload, MessageType,
   Puppet,
   PuppetOptions,
-  ImageType,
   MiniProgramPayload,
   UrlLinkPayload,
   FileBox,
@@ -103,12 +102,12 @@ class PuppetLark extends Puppet {
             messageId: payload.event.open_message_id,
           })
         }
+        return null
       } else {
         console.info('Type undefined: ' + payload)
         return null
       }
     })
-
   }
 
   async stop (): Promise<void> {
@@ -127,7 +126,26 @@ class PuppetLark extends Puppet {
     this.emit('dong', eventDongPayload)
   }
 
+  contactPhone (contactId: string, phoneList: string[]): Promise<void> {
+    console.info(contactId)
+    console.info(phoneList)
+    throw new Error('Method not implemented.')
+  }
+
+  contactCorporationRemark (contactId: string, corporationRemark: string): Promise<void> {
+    console.info(contactId)
+    console.info(corporationRemark)
+    throw new Error('Method not implemented.')
+  }
+
+  contactDescription (contactId: string, description: string): Promise<void> {
+    console.info(contactId)
+    console.info(description)
+    throw new Error('Method not implemented.')
+  }
+
   async contactSelfName (name: string): Promise<void> {
+    console.info(name)
     console.info('ERROR: The name of lark bot can not be modified.')
   }
 
@@ -135,10 +153,10 @@ class PuppetLark extends Puppet {
     console.info('A lark bot don\'t have the QR code. So we will show you the bot\'s id.')
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
     const response = await axios({
-      method: 'GET',
       headers: {
         Authorization: 'Bearer ' + _token,
       },
+      method: 'GET',
       url: 'https://open.feishu.cn/open-apis/bot/v3/info/',
     })
     if (response.data.code === 0) {
@@ -150,6 +168,7 @@ class PuppetLark extends Puppet {
   }
 
   async contactSelfSignature (signature: string): Promise<void> {
+    console.info(signature)
     console.info('ERROR: The signature of lark bot can not be modified.')
   }
 
@@ -157,31 +176,31 @@ class PuppetLark extends Puppet {
   async tagContactAdd (tagId: string, contactId: string): Promise<void> {
     let _token = await this.getTenantAccessToken(this.appId, this.appSecret)
     let response = await axios({
-      method: 'POST',
-      headers: {
-        Authorization: 'Bearer ' + _token,
-      },
-      url: 'https://open.feishu.cn/open-apis/contact/v1/user/batch_get',
       data: {
         employee_ids: [contactId],
       },
+      headers: {
+        Authorization: 'Bearer ' + _token,
+      },
+      method: 'POST',
+      url: 'https://open.feishu.cn/open-apis/contact/v1/user/batch_get',
     })
 
     const deps = response.data.data.user_infos.departments
     deps.push(tagId)
     _token = await this.getTenantAccessToken(this.appId, this.appSecret)
     response = await axios({
-      method: 'POST',
+      data:
+      {
+        department_ids: deps,
+        open_id: contactId,
+      },
       headers: {
         Authorization: 'Bearer ' + _token,
         'Content-Type': 'application/json',
       },
+      method: 'POST',
       url: 'https://open.feishu.cn/open-apis/contact/v1/user/update',
-      data:
-      {
-        open_id: contactId,
-        department_ids: deps,
-      },
     })
     if (response.data.code === '0') {
       console.info('Successfully modify department.')
@@ -193,16 +212,16 @@ class PuppetLark extends Puppet {
   async tagContactDelete (tagId: string): Promise<void> {
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
     const response = await axios({
-      method: 'POST',
-      headers: {
-        Authorization: 'Bearer ' + _token,
-        'Content-Type': 'application/json',
-      },
-      url: 'https://open.feishu.cn/open-apis/contact/v1/user/update',
       data:
       {
         id: tagId,
       },
+      headers: {
+        Authorization: 'Bearer ' + _token,
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      url: 'https://open.feishu.cn/open-apis/contact/v1/user/update',
     })
     if (response.data.code === '0') {
       console.info('Successfully delete department.')
@@ -214,23 +233,24 @@ class PuppetLark extends Puppet {
   tagContactList(tagId: string, contactId: string): Promise<string[]>;
   tagContactList(): Promise<string[]>
   tagContactList (contactId?: any): Promise<string[]> | null {
+    console.info(contactId)
     throw new Error('Method not implemented.')
   }
 
-  async tagContactRemove (tagId: string, contactId: string): Promise<void> {
+  async tagContactRemove (contactId: string): Promise<void> {
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
     const response = await axios({
-      method: 'POST',
+      data:
+      {
+        department_ids: [],
+        open_id: contactId,
+      },
       headers: {
         Authorization: 'Bearer ' + _token,
         'Content-Type': 'application/json',
       },
+      method: 'POST',
       url: 'https://open.feishu.cn/open-apis/contact/v1/user/update',
-      data:
-      {
-        open_id: contactId,
-        department_ids: [],
-      },
     })
     if (response.data.code === '0') {
       console.info('Successfully modify department.')
@@ -242,22 +262,26 @@ class PuppetLark extends Puppet {
   contactAlias(contactId: string): Promise<string>
   contactAlias(contactId: string, alias: string): Promise<void>
   async contactAlias (contactId: any, alias?: any): Promise<string | void> {
+    console.info(contactId)
+    console.info(alias)
     console.info('ERROR: There is no alias in lark.')
   }
 
   contactAvatar(contactId: string): Promise<FileBox>
   contactAvatar(contactId: string, file: FileBox): Promise<void>
   async contactAvatar (contactId: any, file?: any): Promise<FileBox | void> {
+    console.info(contactId)
+    console.info(file)
     console.info('ERROR: The avatar of lark contact can not be modified.')
   }
 
   async contactList (): Promise<string[]> {
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
     const response = await axios({
-      method: 'GET',
       headers: {
         Authorization: 'Bearer ' + _token,
       },
+      method: 'GET',
       url: 'https://open.feishu.cn/open-apis/contact/v1/scope/get',
     })
     let authedEmployee: string[] = []
@@ -272,22 +296,28 @@ class PuppetLark extends Puppet {
   }
 
   protected contactRawPayload (contactId: string): Promise<any> {
+    console.info(contactId)
     throw new Error('Method not implemented.')
   }
 
   protected contactRawPayloadParser (rawPayload: any): Promise<import('wechaty-puppet').ContactPayload> {
+    console.info(rawPayload)
     throw new Error('Method not implemented.')
   }
 
   async friendshipAccept (friendshipId: string): Promise<void> {
+    console.info(friendshipId)
     console.info('ERROR: There is no need to use this method \'friendshipAccept\' in lark.')
   }
 
   async friendshipAdd (contactId: string, hello?: string): Promise<void> {
+    console.info(contactId)
+    console.info(hello)
     console.info('ERROR: There is no need to use this method \'friendshipAdd\' in lark.')
   }
 
   async friendshipSearchPhone (phone: string): Promise<string> {
+    console.info(phone)
     console.info('ERROR: This method \'friendshipSearchPhone\' is not avilable now.')
     return ''
     // let _token = await this.getTenantAccessToken(this.appId, this.appSecret)
@@ -312,19 +342,23 @@ class PuppetLark extends Puppet {
   }
 
   async friendshipSearchWeixin (weixin: string): Promise<string> {
+    console.info(weixin)
     console.info('ERROR: Method \'friendshipSearchWeixin\' is not available in lark.')
     return ''
   }
 
   protected friendshipRawPayload (friendshipId: string): Promise<any> {
+    console.info(friendshipId)
     throw new Error('Method not implemented.')
   }
 
   protected friendshipRawPayloadParser (rawPayload: any): Promise<import('wechaty-puppet').FriendshipPayload> {
+    console.info(rawPayload)
     throw new Error('Method not implemented.')
   }
 
   async messageContact (messageId: string): Promise<string> {
+    console.info(messageId)
     throw new Error('Method not implemented.')
   }
 
@@ -332,49 +366,53 @@ class PuppetLark extends Puppet {
     const fileKey = this.messageStore[messageId].file_key
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
     const response = await axios({
-      method: 'GET',
-      headers: {
-        Authorization: 'Bearer ' + _token,
-      },
-      url: 'https://open.feishu.cn/open-apis/open-file/v1/get/',
       data:
       {
         file_key: fileKey,
       },
+      headers: {
+        Authorization: 'Bearer ' + _token,
+      },
+      method: 'GET',
       responseType: 'arraybuffer',
+      url: 'https://open.feishu.cn/open-apis/open-file/v1/get/',
     })
     const file = FileBox.fromBuffer(response.data, '')
     return file
   }
 
-  async messageImage (messageId: string, imageType: ImageType): Promise<FileBox> {
+  async messageImage (messageId: string): Promise<FileBox> {
     const imageKey = this.messageStore[messageId].image_key
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
     const response = await axios({
-      method: 'GET',
-      headers: {
-        Authorization: 'Bearer ' + _token,
-      },
-      url: 'https://open.feishu.cn/open-apis/image/v4/get/',
       data:
       {
         image_key: imageKey,
       },
+      headers: {
+        Authorization: 'Bearer ' + _token,
+      },
+      method: 'GET',
       responseType: 'arraybuffer',
+      url: 'https://open.feishu.cn/open-apis/image/v4/get/',
     })
     const file = FileBox.fromBuffer(response.data, 'image.png')
     return file
   }
 
   messageMiniProgram (messageId: string): Promise<MiniProgramPayload> {
+    console.info(messageId)
     throw new Error('Method not implemented.')
   }
 
   messageUrl (messageId: string): Promise<UrlLinkPayload> {
+    console.info(messageId)
     throw new Error('Method not implemented.')
   }
 
   async messageSendContact (conversationId: string, contactId: string): Promise<string | void> {
+    console.info(conversationId)
+    console.info(contactId)
     console.info('ERROR: You can not send contact with bot in lark yet.')
   }
 
@@ -384,20 +422,20 @@ class PuppetLark extends Puppet {
       const token = await this.getTenantAccessToken(this.appId, this.appSecret)
       const imageKey = await this.uploadImage(token, file)
       const response = await axios({
-        method: 'POST',
+        data:
+        {
+          chat_id: conversationId,
+          content: {
+            image_key: imageKey,
+          },
+          msg_type: 'image',
+        },
         headers: {
           Authorization: 'Bearer ' + token,
           'Content-Type': 'application/json',
         },
+        method: 'POST',
         url: 'https://open.feishu.cn/open-apis/message/v4/send/',
-        data:
-        {
-          chat_id: conversationId,
-          msg_type: 'image',
-          content: {
-            image_key: imageKey,
-          },
-        },
       })
       if (response.data.code === '0') {
         console.info('Successfully send image.')
@@ -408,50 +446,53 @@ class PuppetLark extends Puppet {
   }
 
   async messageSendMiniProgram (conversationId: string, miniProgramPayload: MiniProgramPayload): Promise<string | void> {
+    console.info(conversationId)
+    console.info(miniProgramPayload)
     console.info('ERROR: There is no mini program in lark.')
   }
 
-  async messageSendText (conversationId: string, text: string, mentionIdList?: string[]): Promise<string | void> {
+  async messageSendText (conversationId: string, text: string): Promise<string | void> {
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
     await axios({
-      method: 'POST',
+      data:
+      {
+        chat_id: conversationId,
+        content: {
+          text: text,
+        },
+        msg_type: 'text',
+      },
       headers: {
         Authorization: 'Bearer ' + _token,
         'Content-Type': 'application/json',
       },
+      method: 'POST',
       url: 'https://open.feishu.cn/open-apis/message/v4/send/',
-      data:
-      {
-        chat_id: conversationId,
-        msg_type: 'text',
-        content: {
-          text: text,
-        },
-      },
     })
   }
 
   async messageSendUrl (conversationId: string, urlLinkPayload: UrlLinkPayload): Promise<string | void> {
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
-    const response = await axios({
-      method: 'POST',
+    await axios({
+      data:
+      {
+        chat_id: conversationId,
+        content: {
+          text: urlLinkPayload.url,
+        },
+        msg_type: 'text',
+      },
       headers: {
         Authorization: 'Bearer ' + _token,
         'Content-Type': 'application/json',
       },
+      method: 'POST',
       url: 'https://open.feishu.cn/open-apis/message/v4/send/',
-      data:
-      {
-        chat_id: conversationId,
-        msg_type: 'text',
-        content: {
-          text: urlLinkPayload.url,
-        },
-      },
     })
   }
 
   messageRecall (messageId: string): Promise<boolean> {
+    console.info(messageId)
     throw new Error('Method not implemented.')
   }
 
@@ -462,15 +503,15 @@ class PuppetLark extends Puppet {
   public async messageRawPayloadParser (rawPayload: any): Promise<MessagePayload> {
     // Lark message Payload -> Puppet message payload
     const _types: { [key: string]: MessageType } = {
-      image: MessageType.Image,
       file: MessageType.Attachment,
+      image: MessageType.Image,
       text: MessageType.Text,
     }
     const payload: MessagePayload = {
+      fromId: rawPayload.user_open_id,
       id: rawPayload.open_chat_id,
       text: rawPayload.text,
       timestamp: Date.now(),
-      fromId: rawPayload.user_open_id,
       toId: rawPayload.user_open_id, // TODO
       type: _types[rawPayload.msg_type],
     }
@@ -481,45 +522,48 @@ class PuppetLark extends Puppet {
     console.info('WARNNING: This methods \'roomInvitationAccept\' is used to invite bot into room in lark.')
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
     await axios({
-      method: 'POST',
-      headers: {
-        Authorization: 'Bearer ' + _token,
-        'Content-Type': 'application/json',
-      },
-      url: 'https://open.feishu.cn/open-apis/chat/v4/create/',
       data:
       {
         chat_id: roomInvitationId,
       },
+      headers: {
+        Authorization: 'Bearer ' + _token,
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      url: 'https://open.feishu.cn/open-apis/chat/v4/create/',
     })
   }
 
   protected roomInvitationRawPayload (roomInvitationId: string): Promise<any> {
+    console.info(roomInvitationId)
     throw new Error('Method not implemented.')
   }
 
   protected roomInvitationRawPayloadParser (rawPayload: any): Promise<import('wechaty-puppet').RoomInvitationPayload> {
+    console.info(rawPayload)
     throw new Error('Method not implemented.')
   }
 
   async roomAdd (roomId: string, contactId: string): Promise<void> {
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
     await axios({
-      method: 'POST',
-      headers: {
-        Authorization: 'Bearer ' + _token,
-        'Content-Type': 'application/json',
-      },
-      url: 'https://open.feishu.cn/open-apis/chat/v4/create/',
       data:
       {
         chat_id: roomId,
         open_ids: [contactId],
       },
+      headers: {
+        Authorization: 'Bearer ' + _token,
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      url: 'https://open.feishu.cn/open-apis/chat/v4/create/',
     })
   }
 
   async roomAvatar (roomId: string): Promise<FileBox> {
+    console.info(roomId)
     console.info('You can not get room avatar with lark bot yet.')
     return FileBox.fromUrl('')
   }
@@ -527,17 +571,17 @@ class PuppetLark extends Puppet {
   async roomCreate (contactIdList: string[], topic?: string): Promise<string> {
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
     const response = await axios({
-      method: 'POST',
-      headers: {
-        Authorization: 'Bearer ' + _token,
-        'Content-Type': 'application/json',
-      },
-      url: 'https://open.feishu.cn/open-apis/chat/v4/create/',
       data:
       {
         name: topic,
         open_ids: contactIdList,
       },
+      headers: {
+        Authorization: 'Bearer ' + _token,
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      url: 'https://open.feishu.cn/open-apis/chat/v4/create/',
     })
     if (response.data.code === 0) {
       console.info('Successfully create room!')
@@ -551,17 +595,17 @@ class PuppetLark extends Puppet {
   async roomDel (roomId: string, contactId: string): Promise<void> {
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
     const response = await axios({
-      method: 'POST',
-      headers: {
-        Authorization: 'Bearer ' + _token,
-        'Content-Type': 'application/json',
-      },
-      url: 'https://open.feishu.cn/open-apis/chat/v4/chatter/delete/',
       data:
       {
         chat_id: roomId,
         open_ids: [contactId],
       },
+      headers: {
+        Authorization: 'Bearer ' + _token,
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      url: 'https://open.feishu.cn/open-apis/chat/v4/chatter/delete/',
     })
     if (response.data.code === 0) {
       console.info('Successfully remove user!')
@@ -573,10 +617,10 @@ class PuppetLark extends Puppet {
   async roomList (): Promise<string[]> {
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
     let response = await axios({
-      method: 'GET',
       headers: {
         Authorization: 'Bearer ' + _token,
       },
+      method: 'GET',
       url: 'https://open.feishu.cn/open-apis/chat/v4/list',
     })
     let hasmore = response.data.data.has_more
@@ -584,14 +628,14 @@ class PuppetLark extends Puppet {
     if (hasmore) {
       while (hasmore) {
         response = await axios({
-          method: 'GET',
-          headers: {
-            Authorization: 'Bearer ' + _token,
-          },
-          url: 'https://open.feishu.cn/open-apis/chat/v4/list',
           data: {
             page_token: response.data.data.page_token,
           },
+          headers: {
+            Authorization: 'Bearer ' + _token,
+          },
+          method: 'GET',
+          url: 'https://open.feishu.cn/open-apis/chat/v4/list',
         })
         results.concat(response.data.groups)
         hasmore = response.data.data.has_more
@@ -606,6 +650,7 @@ class PuppetLark extends Puppet {
   }
 
   async roomQRCode (roomId: string): Promise<string> {
+    console.info(roomId)
     console.info('ERROR: You can not get QR code in lark.')
     return ''
   }
@@ -613,16 +658,16 @@ class PuppetLark extends Puppet {
   async roomQuit (roomId: string): Promise<void> {
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
     const response = await axios({
-      method: 'POST',
-      headers: {
-        Authorization: 'Bearer ' + _token,
-        'Content-Type': 'application/json',
-      },
-      url: 'https://open.feishu.cn/open-apis/bot/v4/remove',
       data:
       {
         chat_id: roomId,
       },
+      headers: {
+        Authorization: 'Bearer ' + _token,
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      url: 'https://open.feishu.cn/open-apis/bot/v4/remove',
     })
     if (response.data.code === 0) {
       console.info('Successfully quit room')
@@ -637,29 +682,29 @@ class PuppetLark extends Puppet {
     if (topic != null) {
       const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
       const response = await axios({
-        method: 'POST',
-        headers: {
-          Authorization: 'Bearer ' + _token,
-          'Content-Type': 'application/json',
-        },
-        url: 'https://open.feishu.cn/open-apis/chat/v4/update/',
         data: {
           chat_id: roomId,
           name: topic,
         },
+        headers: {
+          Authorization: 'Bearer ' + _token,
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        url: 'https://open.feishu.cn/open-apis/chat/v4/update/',
       })
       console.info(response.data)
     } else {
       const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
       const response = await axios({
-        method: 'GET',
-        headers: {
-          Authorization: 'Bearer ' + _token,
-        },
-        url: 'https://open.feishu.cn/open-apis/chat/v4/info',
         data: {
           chat_id: roomId,
         },
+        headers: {
+          Authorization: 'Bearer ' + _token,
+        },
+        method: 'GET',
+        url: 'https://open.feishu.cn/open-apis/chat/v4/info',
       })
       return response.data.data.i18n_names
     }
@@ -667,54 +712,61 @@ class PuppetLark extends Puppet {
   }
 
   protected roomRawPayload (roomId: string): Promise<any> {
+    console.info(roomId)
     throw new Error('Method not implemented.')
   }
 
   protected roomRawPayloadParser (rawPayload: any): Promise<import('wechaty-puppet').RoomPayload> {
+    console.info(rawPayload)
     throw new Error('Method not implemented.')
   }
 
   roomAnnounce(roomId: string): Promise<string>
   roomAnnounce(roomId: string, text: string): Promise<void>
   async roomAnnounce (roomId: any, text?: any): Promise<string | void> {
+    console.info(roomId)
+    console.info(text)
     console.info('ERROR: You can not send room announce in lark.')
   }
 
   async roomMemberList (roomId: string): Promise<string[]> {
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
     const response = await axios({
-      method: 'GET',
-      headers: {
-        Authorization: 'Bearer ' + _token,
-      },
-      url: 'https://open.feishu.cn/open-apis/chat/v4/info',
       data: {
         chat_id: roomId,
       },
+      headers: {
+        Authorization: 'Bearer ' + _token,
+      },
+      method: 'GET',
+      url: 'https://open.feishu.cn/open-apis/chat/v4/info',
     })
     return response.data.data.members
   }
 
   protected roomMemberRawPayload (roomId: string, contactId: string): Promise<any> {
+    console.info(roomId)
+    console.info(contactId)
     throw new Error('Method not implemented.')
   }
 
   protected roomMemberRawPayloadParser (rawPayload: any): Promise<import('wechaty-puppet').RoomMemberPayload> {
+    console.info(rawPayload)
     throw new Error('Method not implemented.')
   }
 
   private async getTenantAccessToken (appId: string, appSecret: string): Promise<string> {
     const response = await axios({
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      url: 'https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal/',
       data:
       {
         app_id: appId,
         app_secret: appSecret,
       },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      url: 'https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal/',
     })
     const tenantAccessToken = response.data.tenant_access_token
     return tenantAccessToken
@@ -727,13 +779,13 @@ class PuppetLark extends Puppet {
     formData.append('image_type', 'message')
     const boundary = await formData.getBoundary()
     const response = await axios({
-      method: 'POST',
+      data: formData,
       headers: {
         Authorization: 'Bearer ' + _token,
         'Content-Type': 'multipart/form-data;boundary=' + boundary,
       },
+      method: 'POST',
       url: 'https://open.feishu.cn/open-apis/image/v4/put/',
-      data: formData,
     })
     if (response.data.code === 0) {
       return response.data.data.image_key
@@ -746,14 +798,14 @@ class PuppetLark extends Puppet {
   private async getEmployeeList (employeeIds: string[]): Promise<string[]> {
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
     const response = await axios({
-      method: 'POST',
-      headers: {
-        Authorization: 'Bearer ' + _token,
-      },
-      url: 'https://open.feishu.cn/open-apis/contact/v1/user/batch_get',
       data: {
         employee_ids: employeeIds,
       },
+      headers: {
+        Authorization: 'Bearer ' + _token,
+      },
+      method: 'POST',
+      url: 'https://open.feishu.cn/open-apis/contact/v1/user/batch_get',
     })
     let employeeList: string[] = []
     if (response.data.code === 0) {
@@ -764,45 +816,45 @@ class PuppetLark extends Puppet {
     }
   }
 
-  private async getDepartmentList (departmentIdList: string[]): Promise<string[]> {
-    const results = []
-    let _token = await this.getTenantAccessToken(this.appId, this.appSecret)
-    for (let i = 0; i < departmentIdList.length; i++) {
-      const response = await axios({
-        method: 'GET',
-        headers: {
-          Authorization: 'Bearer ' + _token,
-        },
-        url: 'https://open.feishu.cn/open-apis/contact/v1/department/info/',
-        data: {
-          open_department_id: departmentIdList,
-        },
-      })
-      if (response.data.code === 0) {
-        results.push(response.data.data.department_info)
-      } else {
-        _token = await this.getTenantAccessToken(this.appId, this.appSecret)
-      }
-    }
-    return results
-  }
+  // private async getDepartmentList (departmentIdList: string[]): Promise<string[]> {
+  //   const results = []
+  //   let _token = await this.getTenantAccessToken(this.appId, this.appSecret)
+  //   for (let i = 0; i < departmentIdList.length; i++) {
+  //     const response = await axios({
+  //       data: {
+  //         open_department_id: departmentIdList,
+  //       },
+  //       headers: {
+  //         Authorization: 'Bearer ' + _token,
+  //       },
+  //       method: 'GET',
+  //       url: 'https://open.feishu.cn/open-apis/contact/v1/department/info/',
+  //     })
+  //     if (response.data.code === 0) {
+  //       results.push(response.data.data.department_info)
+  //     } else {
+  //       _token = await this.getTenantAccessToken(this.appId, this.appSecret)
+  //     }
+  //   }
+  //   return results
+  // }
 
-  private async infomationInit () {
-    const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
-    const response = await axios({
-      method: 'GET',
-      headers: {
-        Authorization: 'Bearer ' + _token,
-      },
-      url: 'https://open.feishu.cn/open-apis/contact/v1/scope/get',
-    })
-    if (response.data.code === 0) {
-      const authedEmployeeIdList = response.data.data.authed_open_ids
-      this.contacts = await this.getEmployeeList(authedEmployeeIdList)
-      const authedOpenDepartmentList = response.data.data.authed_open_departments
-      this.departments = await this.getDepartmentList(authedOpenDepartmentList)
-    }
-  }
+  // private async infomationInit () {
+  //   const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
+  //   const response = await axios({
+  //     headers: {
+  //       Authorization: 'Bearer ' + _token,
+  //     },
+  //     method: 'GET',
+  //     url: 'https://open.feishu.cn/open-apis/contact/v1/scope/get',
+  //   })
+  //   if (response.data.code === 0) {
+  //     const authedEmployeeIdList = response.data.data.authed_open_ids
+  //     this.contacts = await this.getEmployeeList(authedEmployeeIdList)
+  //     const authedOpenDepartmentList = response.data.data.authed_open_departments
+  //     this.departments = await this.getDepartmentList(authedOpenDepartmentList)
+  //   }
+  // }
 
 }
 
