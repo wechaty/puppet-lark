@@ -26,10 +26,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Chatie/wechaty-puppet-lark.git"
+    "url": "git+https://github.com/wechaty/wechaty-puppet-lark.git"
   },
   "keywords": [
-    "chatie",
     "wechaty",
     "chatbot",
     "bot",
@@ -43,9 +42,9 @@
   ],
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/Chatie/wechaty-puppet-lark/issues"
+    "url": "https://github.com/wechaty/wechaty-puppet-lark/issues"
   },
-  "homepage": "https://github.com/Chatie/wechaty-puppet-lark#readme",
+  "homepage": "https://github.com/wechaty/wechaty-puppet-lark#readme",
   "devDependencies": {
     "@chatie/eslint-config": "^0.12.3",
     "@chatie/git-scripts": "^0.6.2",

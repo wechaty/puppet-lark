@@ -1,4 +1,4 @@
-# 基于开放 API 封装 Wechaty 接口下的飞书聊天机器人
+# WECHATY PUPPET LARK (飞书)
 
 [![Powered by Wechaty](https://img.shields.io/badge/Powered%20By-Wechaty-brightgreen.svg)](https://wechaty.js.org)
 
