@@ -107,7 +107,7 @@ Learn more for building your first Wechaty bot at <https://github.com/wechaty/we
 
 ## Author
 
-Fairy FAN (范蕊), study NAS (Neural Architecture Search) in Nankai University, <https://github.com/Roxanne718>
+[Fairy FAN](https://github.com/Roxanne718) (范蕊), study NAS (Neural Architecture Search) in Nankai University
 
 ## Maintainer
 
