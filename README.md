@@ -26,6 +26,15 @@
 
 按照提示完成URL配置，即可运行示例机器人
 
+## Getting Started with Wechaty
+
+```sh
+export WECHATY_PUPPET=wechaty-puppet-lark
+npm start
+```
+
+Learn more for building your first Wechaty bot at <https://github.com/wechaty/wechaty-getting-started>
+
 ## 项目介绍
 
 “开源软件供应链点亮计划-暑期2020”（以下简称暑期2020）是由中科院软件所与 openEuler 社区共同举办的一项面向高校学生的暑期活动。旨在鼓励在校学生积极参与开源软件的开发维护，促进国内优秀开源软件社区的蓬勃发展。
@@ -75,6 +84,26 @@
 - [Wechaty](https://wechaty.js.org/v/zh/)
 - [Express](https://www.runoob.com/nodejs/nodejs-express-framework.html)
 - [TypeScripts中文手册](https://www.tslang.cn/docs/handbook/basic-types.html)
+
+## History
+
+### master
+
+### v0.4 (Feb 10, 2021)
+
+1. Fix linting
+1. Clean & Upgrade dependencies
+1. Fix CI/CD
+
+### v0.3 (Oct 2020)
+
+1. Move Repo to Wechaty Organization
+1. Blog: [基于开放 API 封装 Wechaty 接口下的飞书聊天机器人：期末](https://wechaty.js.org/2020/09/30/wechaty-puppet-lark-final-blog/)
+
+### v0.0.1 (Jul 29, 2020)
+
+1. Init version.
+1. Blog: [基于开放 API 封装 Wechaty 接口下的飞书聊天机器人：期初](https://wechaty.js.org/2020/07/29/wechaty-puppet-lark-plan-blog/)
 
 ## Author
 
