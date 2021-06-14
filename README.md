@@ -7,6 +7,18 @@
 
 ## 运行方法
 
+### 安装依赖
+
+将代码clone到本地，执行`npm install`
+
+### 在飞书开放平台申请权限
+
+1. 打开飞书开放平台的后台，以申请机器人权限。[飞书开放平台](https://open.feishu.cn/app)
+
+2. 创建应用，应用名称为`wechaty-puppet-lark`(当然你也可以起任何名字)
+
+3. 在应用功能栏，点击启用机器人
+
 ### 配置系统环境变量
 
 1. `WECHATY_PUPPET_LARK_APPID`：飞书应用的App ID
@@ -15,19 +27,23 @@
 
 3. `WECHATY_PUPPET_LARK_TOKEN`：飞书事件订阅平台提供的Verification Token
 
-### 安装依赖
-
-将代码clone到本地，执行`npm install`
-
-### 飞书平台配置
-
-在飞书平台获取功能权限，具体参考：[飞书开放平台-应用权限](https://open.feishu.cn/document/ukTMukTMukTM/uQjN3QjL0YzN04CN2cDN)
-
 ### 运行示例代码
 
 `ts-node .\examples\ding-dong-bot.ts`
 
-按照提示完成URL配置，即可运行示例机器人
+### 添加事件订阅URL
+
+当示例代码运行成功后，会出现一行URL。
+
+将URL填入`事件订阅`的`请求网址 URL`即可。
+
+### 使用机器人
+
+在飞书中搜索机器人的名字，比如`wechaty-puppet-lark`。
+
+对机器人发送`ding`，机器人回复`dong`则证明运行成功。
+
+若运行不成功，则返回检查设置是否正确。
 
 ## Getting Started with Wechaty
 
