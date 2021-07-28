@@ -168,11 +168,10 @@ class PuppetLark extends Puppet {
   // Tag is use as department in lark bot
   async tagContactAdd (tagId: string, contactId: string): Promise<void> {
     let _token = await this.getTenantAccessToken(this.appId, this.appSecret)
-    let user_id=contactId
     let response = await axios({
-      // data: {
-      //   user_id: [contactId],
-      // },
+      data: {
+        user_id: [contactId],
+      },
       headers: {
         Authorization: 'Bearer ' + _token,
       },
@@ -231,13 +230,12 @@ class PuppetLark extends Puppet {
 
   async tagContactRemove (contactId: string): Promise<void> {
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
-    let user_id=contactId
     const response = await axios({
-      // data:
-      // {
-      //   department_ids: [],
-      //   open_id: contactId,
-      // },
+      data:
+      {
+        department_ids: [],
+        open_id: contactId,
+      },
       headers: {
         Authorization: 'Bearer ' + _token,
         'Content-Type': 'application/json',
