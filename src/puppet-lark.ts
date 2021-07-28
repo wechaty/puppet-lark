@@ -168,32 +168,32 @@ class PuppetLark extends Puppet {
   // Tag is use as department in lark bot
   async tagContactAdd (tagId: string, contactId: string): Promise<void> {
     let _token = await this.getTenantAccessToken(this.appId, this.appSecret)
+    let user_id=contactId
     let response = await axios({
-      data: {
-        employee_ids: [contactId],
-      },
+      // data: {
+      //   user_id: [contactId],
+      // },
       headers: {
         Authorization: 'Bearer ' + _token,
       },
-      method: 'POST',
-      url: 'https://open.feishu.cn/open-apis/contact/v1/user/batch_get',
+      method: 'GET',
+      url: 'https://open.feishu.cn/open-apis/contact/v3/users/:user_id',
     })
 
-    const deps = response.data.data.user_infos.departments
+    const deps = response.data.user.department_ids
     deps.push(tagId)
     _token = await this.getTenantAccessToken(this.appId, this.appSecret)
     response = await axios({
       data:
       {
         department_ids: deps,
-        open_id: contactId,
       },
       headers: {
         Authorization: 'Bearer ' + _token,
         'Content-Type': 'application/json',
       },
-      method: 'POST',
-      url: 'https://open.feishu.cn/open-apis/contact/v1/user/update',
+      method: 'PATCH',
+      url: 'https://open.feishu.cn/open-apis/contact/v3/users/:user_id',
     })
     if (response.data.code === '0') {
       log.verbose('PuppetLark', 'tagContactAdd', 'Successfully modify department.')
@@ -213,8 +213,8 @@ class PuppetLark extends Puppet {
         Authorization: 'Bearer ' + _token,
         'Content-Type': 'application/json',
       },
-      method: 'POST',
-      url: 'https://open.feishu.cn/open-apis/contact/v1/user/update',
+      method: 'DELETE',
+      url: 'https://open.feishu.cn/open-apis/contact/v3/departments/:department_id',
     })
     if (response.data.code === '0') {
       log.verbose('PuppetLark', 'tagContactAdd', 'Successfully delete department.')
@@ -231,18 +231,19 @@ class PuppetLark extends Puppet {
 
   async tagContactRemove (contactId: string): Promise<void> {
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
+    let user_id=contactId
     const response = await axios({
-      data:
-      {
-        department_ids: [],
-        open_id: contactId,
-      },
+      // data:
+      // {
+      //   department_ids: [],
+      //   open_id: contactId,
+      // },
       headers: {
         Authorization: 'Bearer ' + _token,
         'Content-Type': 'application/json',
       },
-      method: 'POST',
-      url: 'https://open.feishu.cn/open-apis/contact/v1/user/update',
+      method: 'DELETE',
+      url: 'https://open.feishu.cn/open-apis/contact/v3/users/:user_id',
     })
     if (response.data.code === '0') {
       log.verbose('PuppetLark', 'tagContactRemove', 'Successfully modify department.')
@@ -272,7 +273,7 @@ class PuppetLark extends Puppet {
         Authorization: 'Bearer ' + _token,
       },
       method: 'GET',
-      url: 'https://open.feishu.cn/open-apis/contact/v1/scope/get',
+      url: 'https://open.feishu.cn/open-apis/contact/v3/users',
     })
     let authedEmployee: string[] = []
     if (response.data.code === 0) {
@@ -352,13 +353,14 @@ class PuppetLark extends Puppet {
       data:
       {
         file_key: fileKey,
+        message_id: messageId,
       },
       headers: {
         Authorization: 'Bearer ' + _token,
       },
       method: 'GET',
       responseType: 'arraybuffer',
-      url: 'https://open.feishu.cn/open-apis/open-file/v1/get/',
+      url: 'https://open.feishu.cn/open-apis/im/v1/messages/:message_id/resources/:file_key',
     })
     const file = FileBox.fromBuffer(response.data, '')
     return file
@@ -377,7 +379,7 @@ class PuppetLark extends Puppet {
       },
       method: 'GET',
       responseType: 'arraybuffer',
-      url: 'https://open.feishu.cn/open-apis/image/v4/get/',
+      url: 'https://open.feishu.cn/open-apis/im/v1/images/:image_key',
     })
     const file = FileBox.fromBuffer(response.data, 'image.png')
     return file
@@ -415,7 +417,7 @@ class PuppetLark extends Puppet {
           'Content-Type': 'application/json',
         },
         method: 'POST',
-        url: 'https://open.feishu.cn/open-apis/message/v4/send/',
+        url: 'https://open.feishu.cn/open-apis/im/v1/images',
       })
       if (response.data.code === '0') {
         log.verbose('PuppetLark', 'messageSendFile', 'Successfully send image.')
@@ -445,7 +447,7 @@ class PuppetLark extends Puppet {
         'Content-Type': 'application/json',
       },
       method: 'POST',
-      url: 'https://open.feishu.cn/open-apis/message/v4/send/',
+      url: 'https://open.feishu.cn/open-apis/im/v1/messages',
     })
   }
 
@@ -465,7 +467,7 @@ class PuppetLark extends Puppet {
         'Content-Type': 'application/json',
       },
       method: 'POST',
-      url: 'https://open.feishu.cn/open-apis/message/v4/send/',
+      url: 'https://open.feishu.cn/open-apis/im/v1/messages',
     })
   }
 
@@ -508,7 +510,7 @@ class PuppetLark extends Puppet {
         'Content-Type': 'application/json',
       },
       method: 'POST',
-      url: 'https://open.feishu.cn/open-apis/chat/v4/create/',
+      url: 'https://open.feishu.cn/open-apis/im/v1/chats/:chat_id/members',
     })
   }
 
@@ -533,7 +535,7 @@ class PuppetLark extends Puppet {
         'Content-Type': 'application/json',
       },
       method: 'POST',
-      url: 'https://open.feishu.cn/open-apis/chat/v4/create/',
+      url: 'https://open.feishu.cn/open-apis/im/v1/chats/:chat_id/members',
     })
   }
 
@@ -555,7 +557,7 @@ class PuppetLark extends Puppet {
         'Content-Type': 'application/json',
       },
       method: 'POST',
-      url: 'https://open.feishu.cn/open-apis/chat/v4/create/',
+      url: 'https://open.feishu.cn/open-apis/im/v1/chats',
     })
     if (response.data.code === 0) {
       log.verbose('PuppetLark', 'roomCreate', 'Successfully create room!')
@@ -579,7 +581,7 @@ class PuppetLark extends Puppet {
         'Content-Type': 'application/json',
       },
       method: 'POST',
-      url: 'https://open.feishu.cn/open-apis/chat/v4/chatter/delete/',
+      url: 'https://open.feishu.cn/open-apis/im/v1/chats/:chat_id',
     })
     if (response.data.code === 0) {
       log.verbose('PuppetLark', 'roomDel', 'Successfully remove user!')
@@ -595,7 +597,7 @@ class PuppetLark extends Puppet {
         Authorization: 'Bearer ' + _token,
       },
       method: 'GET',
-      url: 'https://open.feishu.cn/open-apis/chat/v4/list',
+      url: 'https://open.feishu.cn/open-apis/im/v1/chats/:chat_id/members',
     })
     let hasmore = response.data.data.has_more
     const results: string[] = response.data.data.groups
@@ -609,7 +611,7 @@ class PuppetLark extends Puppet {
             Authorization: 'Bearer ' + _token,
           },
           method: 'GET',
-          url: 'https://open.feishu.cn/open-apis/chat/v4/list',
+          url: 'https://open.feishu.cn/open-apis/im/v1/chats/:chat_id/members',
         })
         results.concat(response.data.groups)
         hasmore = response.data.data.has_more
@@ -641,7 +643,7 @@ class PuppetLark extends Puppet {
         'Content-Type': 'application/json',
       },
       method: 'POST',
-      url: 'https://open.feishu.cn/open-apis/bot/v4/remove',
+      url: 'https://open.feishu.cn/open-apis/im/v1/chats/:chat_id',
     })
     if (response.data.code === 0) {
       log.verbose('PuppetLark', 'roomQuit', 'Successfully quit room')
@@ -665,7 +667,7 @@ class PuppetLark extends Puppet {
           'Content-Type': 'application/json',
         },
         method: 'POST',
-        url: 'https://open.feishu.cn/open-apis/chat/v4/update/',
+        url: 'https://open.feishu.cn/open-apis/im/v1/chats/:chat_id/announcement',
       })
     } else {
       const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
@@ -677,7 +679,7 @@ class PuppetLark extends Puppet {
           Authorization: 'Bearer ' + _token,
         },
         method: 'GET',
-        url: 'https://open.feishu.cn/open-apis/chat/v4/info',
+        url: 'https://open.feishu.cn/open-apis/im/v1/chats/:chat_id/announcement',
       })
       return response.data.data.i18n_names
     }
@@ -709,7 +711,7 @@ class PuppetLark extends Puppet {
         Authorization: 'Bearer ' + _token,
       },
       method: 'GET',
-      url: 'https://open.feishu.cn/open-apis/chat/v4/info',
+      url: 'https://open.feishu.cn/open-apis/im/v1/chats/:chat_id/members',
     })
     return response.data.data.members
   }
@@ -733,7 +735,7 @@ class PuppetLark extends Puppet {
         'Content-Type': 'application/json',
       },
       method: 'POST',
-      url: 'https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal/',
+      url: 'https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/',
     })
     const tenantAccessToken = response.data.tenant_access_token
     return tenantAccessToken
@@ -752,7 +754,7 @@ class PuppetLark extends Puppet {
         'Content-Type': 'multipart/form-data;boundary=' + boundary,
       },
       method: 'POST',
-      url: 'https://open.feishu.cn/open-apis/image/v4/put/',
+      url: 'https://open.feishu.cn/open-apis/im/v1/images',
     })
     if (response.data.code === 0) {
       return response.data.data.image_key
@@ -771,7 +773,7 @@ class PuppetLark extends Puppet {
         Authorization: 'Bearer ' + _token,
       },
       method: 'POST',
-      url: 'https://open.feishu.cn/open-apis/contact/v1/user/batch_get',
+      url: 'https://open.feishu.cn/open-apis/ehr/v1/employees',
     })
     let employeeList: string[] = []
     if (response.data.code === 0) {
