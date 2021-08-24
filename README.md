@@ -38,48 +38,57 @@ npm start
 
 Learn more for building your first Wechaty bot at <https://github.com/wechaty/wechaty-getting-started>
 
-## 项目介绍
+- ## 项目介绍
 
-“开源软件供应链点亮计划-暑期2020”（以下简称暑期2020）是由中科院软件所与 openEuler 社区共同举办的一项面向高校学生的暑期活动。旨在鼓励在校学生积极参与开源软件的开发维护，促进国内优秀开源软件社区的蓬勃发展。
+  “开源软件供应链点亮计划-暑期2021”（以下简称 暑期2021）是由中科院软件所与 openEuler 社区共同举办的一项面向高校学生的暑期活动。旨在鼓励在校学生积极参与开源软件的开发维护，促进国内优秀开源软件社区的蓬勃发展。活动联合各大开源社区，针对重要开源软件的开发与维护提供项目，并向全球高校学生开放报名。 学生可自主选择感兴趣的项目进行申请，并在中选后获得该软件资深维护者（社区导师）亲自指导的机会。 根据项目的难易程度和完成情况，参与者还可获取“开源软件供应链点亮计划-暑期2021”活动奖金和奖杯。
 
-根据项目的难易程度和完成情况，参与者还可获取“开源软件供应链点亮计划-暑期2020”活动奖金和奖杯。
-官网：[Summer2020](https://isrc.iscas.ac.cn/summer2020) 官方新闻：[News](http://www.iscas.ac.cn/xshd2016/xshy2016/202004/t20200426_5563484.html)
+  官网：[https://summer.iscas.ac.cn](https://summer.iscas.ac.cn/)
 
-本项目 [基于开放 API 封装 Wechaty 接口下的飞书聊天机器人] 系 暑期2020 支持的开源项目。
+  往期回顾：[https://wechaty.js.org/2020/07/20/wechaty-soc-kick-off-meeting](https://wechaty.js.org/2020/07/20/wechaty-soc-kick-off-meeting)
 
-- 导师：高原 吴京京
-- 学生：范蕊
+  本项目 [基于开放 API 封装 Wechaty 接口下的飞书聊天机器人] 系 暑期2021 支持的开源项目。
+
+## [基于开放 API 封装 Wechaty 接口下的飞书聊天机器人]具体计划
+
+- 导师：范蕊
+
+- 学生：马田慧
+
+- 项目链接：[wechaty/summer-of-wechaty#38](https://github.com/wechaty/summer-of-wechaty/issues/38)
+
 - 模块列表
-  - [x] 接收消息
-  - [x] 通讯录获取
-  - [x] 实现 puppet 上各个类型的消息接口
-  - [ ] 设计配置参数
-  - [x] 使用文档
-- 计划安排：
-  - 阅读源代码
-    - 7.29 - 7.31
-    - 阅读 wechaty 源代码
-    - 学习飞书服务端 API
-    - 整理需要实现的 puppet list
-  - 接收消息
-    - 8.1 - 8.5
-    - 通过飞书订阅消息事件实现消息接收
-  - 通讯录获取
-    - 8.6 - 8.10
-    - 通过飞书订阅通讯录事件实现通讯录更新信息的接收
-  - 实现 puppet 上各个类型的消息接口
-    - 8.10 - 8.30
-    - 对接飞书接口, 实现各个类型的消息接口
-    - 消息类型包括: 文字, 图片, 富文本, 群名片
-  - 设计配置参数
-    - 8.31 - 9.7
-  - 使用文档
-    - 9.8 - 9.12
+
+  - [x] 更新api版本，熟悉飞书api和wechaty。
+  - [x] 实现之前未实现的函数
+  - [ ] 连接Contact、Message、Room等类，尝试实现复用
+  - [ ] 撰写文档、example
+  - [ ] 发布npm包
+
+- 计划安排
+
+  - 熟悉wechaty
+    - 7.14 - 7.17
+    - 使用wechaty
+    - 了解飞书api
+  - 更新api版本
+    - 7.18 - 7.24
+  - 实现之前未实现的函数阶段
+    - 7.25 - 8.8
+    - 分两阶段完成，期间注重与导师交流
+  - 连接Contact、Message、Room等类
+    - 8.9 - 8.21
+  - 撰写文档，examples
+    - 8.22 - 8.28
   - 项目完善
-    - 9.12 - 9.30
+    - 8.29 - 9.5
     - 代码重构
-- 项目链接：[https://github.com/Roxanne718/wechaty-puppet-lark](https://github.com/Roxanne718/wechaty-puppet-lark)
-- 联系方式：+86 17822015718 | email: 953299708@qq.com
+    - 发布npm包
+
+- 项目链接：
+
+  [https://github.com/remember00000/wechaty-puppet-lark](https://github.com/remember00000/wechaty-puppet-lark)
+
+- 联系方式：+86 18660817606|email：2741102314@qq.com
 
 ## 相关链接
 
@@ -91,6 +100,12 @@ Learn more for building your first Wechaty bot at <https://github.com/wechaty/we
 ## History
 
 ### master
+
+### v0.5(July 14,2021)
+
+1.Update API and methods implement
+
+2.Blog:[基于开放 API 封装 Wechaty 接口下的飞书聊天机器人：期初](https://wechaty.js.org/2021/07/14/ospp-plan-wechaty-puppet-lark/)
 
 ### v0.4 (Feb 10, 2021)
 
