@@ -84,7 +84,7 @@ class PuppetLark extends Puppet {
 
     this.app.post('/', async (req: any, res: any) => {
       const payload = req.body
-      console.log("/post payload:",payload)
+      // console.log("/post payload:",payload)
       // verify token
       if (payload.token !== this.appVerificationToken) {
         console.error('verification token not match, token = ', payload)
@@ -96,9 +96,9 @@ class PuppetLark extends Puppet {
         res.status(200).json({ challenge: payload.challenge })
         return null
       } else if (payload.type === 'event_callback') {
-        console.log('message callback')
+        // console.log('message callback')
         if (payload.event.type === 'message') {
-          console.log('message to messagestore')
+          // console.log('message to messagestore')
           this.messageStore[payload.event.open_id] = payload.event
           this.emit('message', {
             messageId: payload.event.open_id,
@@ -288,7 +288,7 @@ class PuppetLark extends Puppet {
 
   async contactList (): Promise<string[]> {
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
-    console.log("Tenanttoken:",_token)
+    // console.log("Tenanttoken:",_token)
     const response = await axios({
       headers: {
         Authorization: 'Bearer ' + _token,
@@ -296,7 +296,7 @@ class PuppetLark extends Puppet {
       method: 'GET',
       url: 'https://open.feishu.cn/open-apis/contact/v3/users',
     })
-    console.log("response is:",response)
+    // console.log("response is:",response)
     let authedEmployee: string[] = []
     if (response.data.code === 0) {
       const authedEmployeeIdList = response.data.data.items
