@@ -14,6 +14,9 @@ import {
   FileBox,
   EventDongPayload,
   log,
+  ContactPayload,
+  RoomPayload,
+  RoomMemberPayload,
 } from 'wechaty-puppet'
 
 import { VERSION } from './version'
@@ -283,13 +286,21 @@ class PuppetLark extends Puppet {
       return authedEmployee
     }
   }
-
-  protected contactRawPayload (): Promise<any> {
-    throw new Error('Method not implemented.')
+  async contactRawPayload (id: string): Promise<ContactPayload> {
+    log.verbose('Puppetlark','contactRawPayload(%s)',id)
+    let payload= this.messageStore[id]
+    if(payload){
+      this.cacheContactPayload.set(id,payload)
+    }
+    payload=this.cacheContactPayload.get(id)
+    if(!payload){
+      throw new Error('no payload found for id' + id)
+    }
+    return payload
   }
 
-  protected contactRawPayloadParser (): Promise<import('wechaty-puppet').ContactPayload> {
-    throw new Error('Method not implemented.')
+  async contactRawPayloadParser (payload: ContactPayload): Promise<ContactPayload> {
+    return payload
   }
 
   async friendshipAccept (): Promise<void> {
@@ -684,12 +695,21 @@ class PuppetLark extends Puppet {
 
   }
 
-  protected roomRawPayload (): Promise<any> {
-    throw new Error('Method not implemented.')
+  async roomRawPayload (id:string): Promise<RoomPayload> {
+    log.verbose('PuppetLark','roomRawPayload(%s)',id)
+    let payload=this.messageStore[id]
+    if(payload){
+      this.cacheContactPayload.set(id,payload)
+    }
+    payload=this.cacheContactPayload.get(id)
+    if(!payload){
+      throw new Error('no payload found for id ' + id)
+    }
+    return payload
   }
 
-  protected roomRawPayloadParser (): Promise<import('wechaty-puppet').RoomPayload> {
-    throw new Error('Method not implemented.')
+  async roomRawPayloadParser (payload: RoomPayload): Promise<RoomPayload> {
+    return payload
   }
 
   roomAnnounce(roomId: string): Promise<string>
@@ -714,12 +734,19 @@ class PuppetLark extends Puppet {
     return response.data.data.members
   }
 
-  protected roomMemberRawPayload (): Promise<any> {
-    throw new Error('Method not implemented.')
+  async  roomMemberRawPayload (roomId: string, contactId: string): Promise<RoomMemberPayload> {
+    log.verbose('Puppetlark','roomMemberRawPayload(%s, %s)',roomId, contactId)
+    return{
+      avatar : 'lark-avater-data',
+      id : 'xx',
+      name: 'lark-name',
+      roomAlias: 'yy',
+    }
   }
 
-  protected roomMemberRawPayloadParser (): Promise<import('wechaty-puppet').RoomMemberPayload> {
-    throw new Error('Method not implemented.')
+  async roomMemberRawPayloadParser (rawPayload: RoomMemberPayload): Promise<RoomMemberPayload> {
+    log.verbose('Puppetlark', 'roomMemberRawPayloadParser(%s)', rawPayload)
+    return rawPayload
   }
 
   private async getTenantAccessToken (appId: string, appSecret: string): Promise<string> {
