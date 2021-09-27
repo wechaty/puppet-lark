@@ -74,7 +74,7 @@ class PuppetLark extends Puppet {
       this.localTunnel = await localtunnel({
         host: 'http://localtunnel.chatie.io',
         port: listenedPort,
-        subdomain: 'wechaty-puppet-lark',
+        subdomain: 'larkpuppet',
       })
       log.info('Server is running on ', this.localTunnel.url, ' now.\nPlease verify it on your lark bot and app.')
     })
@@ -84,6 +84,7 @@ class PuppetLark extends Puppet {
 
     this.app.post('/', async (req: any, res: any) => {
       const payload = req.body
+      console.log("/post payload:",payload)
       // verify token
       if (payload.token !== this.appVerificationToken) {
         console.error('verification token not match, token = ', payload)
@@ -95,10 +96,12 @@ class PuppetLark extends Puppet {
         res.status(200).json({ challenge: payload.challenge })
         return null
       } else if (payload.type === 'event_callback') {
+        console.log('message callback')
         if (payload.event.type === 'message') {
-          this.messageStore[payload.event.open_message_id] = payload.event
+          console.log('message to messagestore')
+          this.messageStore[payload.event.open_id] = payload.event
           this.emit('message', {
-            messageId: payload.event.open_message_id,
+            messageId: payload.event.open_id,
           })
         }
         return null
@@ -125,15 +128,33 @@ class PuppetLark extends Puppet {
     this.emit('dong', eventDongPayload)
   }
 
-  contactPhone (): Promise<void> {
-    throw new Error('Method not implemented.')
+  async contactPhone (): Promise<void> {
+    const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
+    const payload:{[key:string]:string} = {}
+    const response = await axios({
+      headers:{
+        Authorization: 'Bearer ' + _token,
+      },
+      method:'GET',
+      url:'https://open.feishu.cn/open-apis/contact/v3/users',
+    })
+    if (response.data.code === 0) {
+      const contactlist = response.data.data.items
+      for (const i in contactlist) {
+        const obj = contactlist[i]
+        payload[obj.name] = obj.mobile
+      }
+    }
   }
 
   contactCorporationRemark (): Promise<void> {
+    log.warn('There is no need to use this method \'logout\' in a lark bot.')
     throw new Error('Method not implemented.')
   }
 
   contactDescription (): Promise<void> {
+    console.error('The name of lark bot can not be modified.')
+
     throw new Error('Method not implemented.')
   }
 
@@ -267,16 +288,18 @@ class PuppetLark extends Puppet {
 
   async contactList (): Promise<string[]> {
     const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
+    console.log("Tenanttoken:",_token)
     const response = await axios({
       headers: {
         Authorization: 'Bearer ' + _token,
       },
       method: 'GET',
-      url: 'https://open.feishu.cn/open-apis/contact/v1/scope/get',
+      url: 'https://open.feishu.cn/open-apis/contact/v3/users',
     })
+    console.log("response is:",response)
     let authedEmployee: string[] = []
     if (response.data.code === 0) {
-      const authedEmployeeIdList = response.data.data.authed_employee_ids
+      const authedEmployeeIdList = response.data.data.items
       authedEmployee = await this.getEmployeeList(authedEmployeeIdList)
       return authedEmployee
     } else {

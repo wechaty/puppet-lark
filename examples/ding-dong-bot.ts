@@ -22,7 +22,7 @@ puppet.on('message', onMessage)
 
 async function onMessage (payload: EventMessagePayload) {
   const msgPayload = await puppet.messagePayload(payload.messageId)
-  // console.info(msgPayload)
+  console.info("get msgPayload:", msgPayload)
   if (msgPayload.type === MessageType.Image) {
     const image = await puppet.messageImage(msgPayload.id)
     await image.toFile('download.png', true)
