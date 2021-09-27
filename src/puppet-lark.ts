@@ -357,10 +357,12 @@ class PuppetLark extends Puppet {
   }
 
   protected friendshipRawPayload (): Promise<any> {
+    log.warn('There is no need to use this method \'logout\' in a lark bot.')
     throw new Error('Method not implemented.')
   }
 
   protected friendshipRawPayloadParser (): Promise<import('wechaty-puppet').FriendshipPayload> {
+    log.warn('There is no need to use this method \'logout\' in a lark bot.')
     throw new Error('Method not implemented.')
   }
 
@@ -492,8 +494,21 @@ class PuppetLark extends Puppet {
     })
   }
 
-  messageRecall (): Promise<boolean> {
-    throw new Error('Method not implemented.')
+  async messageRecall (messageId: string): Promise<boolean> {
+    const _token = await this.getTenantAccessToken(this.appId, this.appSecret)
+    const response = await axios({
+      headers:{
+        Authorization: 'Bearer ' + _token,
+        'Content-Type': 'application/json',
+      },
+      method:'DELETE',
+      url:'https://open.feishu.cn/open-apis/im/v1/messages/' + messageId,
+    })
+    if (response.data.code === 0) {
+      return true
+    } else {
+      return false
+    }
   }
 
   public async messageRawPayload (messageId: string): Promise<any> {
